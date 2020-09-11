@@ -74,13 +74,17 @@ def requested():
     url = "https://onuhktb13l.execute-api.us-east-1.amazonaws.com/plasma/requestonbloodgroup?blood="+bloodgrp
     status = requests.request("GET",url)
     a=status.json()
-    emailids=[]
+    print(a)
+    phone=[]
     for i in a:
-        emailids.append(i['email'])
-    print(emailids)
+        url="https://www.fast2sms.com/dev/bulk?authorization=cBv0mF78fTtkJEbZje25GyMYO4xCVNzXKdpoSaAgl9I6hLnPDr47Bu3hC0MpQfW1k96JgreKzFy2odZn&sender_id=FSTSMS&message=Need Plasma of your blood group&language=english&route=p&numbers="+str(i['phone'])
+        result = requests.request("GET",url)
+        print(result)
+        phone.append(i['phone'])
+    print(phone)
     return render_template('request.html', pred="Your request is sent to the concerned people.")
     
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0',port=8080)
 
